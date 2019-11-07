@@ -1,5 +1,5 @@
 <template>
-    <div id="profile-container" class="tab active">
+    <div id="profile-container" class="tab" :class="{active: isActive}" >
         <div id="profile">
             <div class="avatar">
                 <img src="./../assets/me.png" id="picture" alt="My picture">
@@ -20,15 +20,22 @@
 </template>
 
 <script>
+
     import User from "../models/User";
 
     export default {
         name: "Profile",
         data: () => {
             return {
+                isActive: true,
                 user: new User("John", "Doe", "11/10/1994", "Data Science", 0)
             }
         },
+        methods: {
+            toggleProfile: function () {
+                this.isActive = !this.isActive;
+            }
+        }
     }
 </script>
 

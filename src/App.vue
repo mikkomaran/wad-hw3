@@ -4,10 +4,10 @@
         <section id="container">
             <section id="main">
                 <div class="content">
-                    <Profile />
-                    <Courses />
+                    <Profile ref="profile"/>
+                    <Courses ref="courses"/>
                 </div>
-                <Controls />
+                <Controls @togglePage="togglePage"/>
             </section>
         </section>
         <Footer />
@@ -29,7 +29,17 @@
             Profile,
             Footer,
             Header
-        }
+        },
+        props: {
+
+        },
+        methods: {
+            togglePage: function () {
+                this.$refs.profile.toggleProfile();
+                this.$refs.courses.toggleCourses();
+            }
+        },
+
     }
 
 </script>

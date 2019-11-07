@@ -1,5 +1,5 @@
 <template>
-    <div id="courses-container" class="tab">
+    <div id="courses-container" class="tab" :class="{active: isActive}">
         <h1 class="title">Courses</h1>
         <table id="courses">
             <thead>
@@ -42,6 +42,7 @@
         name: "Courses",
         data: () => {
             return {
+                isActive: false,
                 courses: [
                     new Course("Agile Software development",1,82),
                     new Course("System modeling",1,85),
@@ -50,6 +51,11 @@
                 ]
             }
         },
+        methods: {
+            toggleCourses: function () {
+                this.isActive = !this.isActive;
+            }
+        }
     }
 </script>
 

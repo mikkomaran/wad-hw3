@@ -1,13 +1,28 @@
 <template>
     <div class="controls">
-        <button id="profile-button" class="pill active">Profile</button>
-        <button id="courses-button" class="pill">Courses</button>
+        <button id="profile-button" class="pill" :class="{active: profileIsActive}" @click="toggleActive(profileIsActive)">Profile</button>
+        <button id="courses-button" class="pill" :class="{active: coursesIsActive}" @click="toggleActive(coursesIsActive)">Courses</button>
     </div>
 </template>
 
 <script>
     export default {
-        name: "Controls"
+        name: "Controls",
+        data: () => {
+          return{
+              profileIsActive: true,
+              coursesIsActive: false,
+          }
+        },
+       methods: {
+            toggleActive: function (isActive) {
+                if (!isActive) {
+                    this.profileIsActive = !this.profileIsActive;
+                    this.coursesIsActive = !this.coursesIsActive;
+                    this.$emit('togglePage');
+                }
+            }
+        }
     }
 </script>
 
@@ -31,7 +46,6 @@
 
     .controls .pill:hover {
         cursor: pointer;
-        background-color: #ffffff;
     }
 
 </style>
