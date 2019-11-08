@@ -34,7 +34,11 @@
         methods: {
             toggleProfile: function () {
                 this.isActive = !this.isActive;
-            }
+                this.user.gpa = this.gpa;
+            },
+        },
+        props: {
+            gpa: Number
         }
     }
 </script>

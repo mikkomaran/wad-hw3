@@ -4,8 +4,8 @@
         <section id="container">
             <section id="main">
                 <div class="content">
-                    <Profile ref="profile"/>
-                    <Courses ref="courses"/>
+                    <Profile :gpa="gpa" ref="profile"/>
+                    <Courses :add="addGpa" ref="courses"/>
                 </div>
                 <Controls @togglePage="togglePage"/>
             </section>
@@ -30,13 +30,18 @@
             Footer,
             Header
         },
-        props: {
-
+        data: () => {
+            return {
+                gpa: 0
+            }
         },
         methods: {
             togglePage: function () {
                 this.$refs.profile.toggleProfile();
                 this.$refs.courses.toggleCourses();
+            },
+            addGpa: function (gpa) {
+                this.gpa = gpa;
             }
         },
 

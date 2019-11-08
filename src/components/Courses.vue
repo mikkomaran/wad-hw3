@@ -24,9 +24,9 @@
         <div>
             <button @click='toggle = !toggle' id="add-course-button" class="blue-button">+</button>
             <span v-show='toggle'>
-                <input class="input" type="text" v-model="message_2" id="title" placeholder="Course title">
-                <input class="input" type="number" min="1" max="8" placeholder="Semester" id="semester">
-                <input class="input" type="number" min="0" max="100" placeholder="Grade" id="grade">
+                <input class="input" type="text" v-model="title" id="title" placeholder="Course title">
+                <input class="input" type="number" v-model="semester" min="1" max="8" placeholder="Semester" id="semester">
+                <input class="input" type="number" v-model="grade" min="0" max="100" placeholder="Grade" id="grade">
                 <button v-on:click="add_button" class="green-button" id="save-course">Save</button>
                 <button @click='toggle = !toggle' class="grey-button" id="cancel-course">Cancel</button>
             </span>
@@ -37,6 +37,7 @@
 <script>
 
     import Course from "../models/Course";
+    import Profile from "./Profile";
 
     export default {
         el: '#add-course',
@@ -45,6 +46,9 @@
             return {
                 toggle:false,
                 isActive: false,
+                title: "",
+                semester: "",
+                grade: "",
                 courses: [
                     new Course("Agile Software development",1,82),
                     new Course("System modeling",1,85),
@@ -57,15 +61,53 @@
             toggleCourses: function () {
                 this.isActive = !this.isActive;
             },
-            add_button: function (event) {
-                alert("töötab");
-                let uus_kursus = this.courses("a", 1, 8);
-                this.courses.push(uus_kursus);
+            add_button: function () {
+                let title = this.title;
+                let semester = this.semester;
+                let grade = this.grade;
 
-                if (event) {
-                    alert("ei")
+                this.title = "";
+                this.semester = "";
+                this.grade = "";
+
+                this.toggle = false;
+
+                this.courses.push(new Course(title, semester, grade));
+                this.computeGPA();
+            },
+            computeGPA: function () {
+                var grade = 0;
+                var points = 0;
+                for (let i = 0; i < this.courses.length; i++) {
+                    grade = this.courses[i].grade;
+                    var point = 0;
+                    if (grade > 90) {
+                        point = 4;
+                    }
+                    else if (grade > 80) {
+                        point = 3;
+                    }
+                    else if (grade > 70) {
+                        point = 2;
+                    }
+                    else if (grade > 60) {
+                        point = 1;
+                    }
+                    else if (grade > 50) {
+                        point = 0.5;
+                    }
+                    else if (grade <= 50) {
+                        point = 0;
+                    }
+                    points += point;
                 }
+                var NewGpa = points/this.courses.length;
+                NewGpa = Math.round(NewGpa * 100) / 100;
+                this.$props.add(NewGpa);
             }
+        },
+        props: {
+            add: Function
         }
     }
 </script>
