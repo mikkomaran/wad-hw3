@@ -22,13 +22,13 @@
         <br>
         <br>
         <div>
-            <button id="add-course-button" class="blue-button">+</button>
-            <span id="add-course">
-                <input class="input" type="text" placeholder="Course title" id="title">
+            <button @click='toggle = !toggle' id="add-course-button" class="blue-button">+</button>
+            <span v-show='toggle'>
+                <input class="input" type="text" v-model="message_2" id="title" placeholder="Course title">
                 <input class="input" type="number" min="1" max="8" placeholder="Semester" id="semester">
                 <input class="input" type="number" min="0" max="100" placeholder="Grade" id="grade">
-                <button class="green-button" id="save-course">Save</button>
-                <button class="grey-button" id="cancel-course">Cancel</button>
+                <button v-on:click="add_button" class="green-button" id="save-course">Save</button>
+                <button @click='toggle = !toggle' class="grey-button" id="cancel-course">Cancel</button>
             </span>
         </div>
     </div>
@@ -39,9 +39,11 @@
     import Course from "../models/Course";
 
     export default {
+        el: '#add-course',
         name: "Courses",
         data: () => {
             return {
+                toggle:false,
                 isActive: false,
                 courses: [
                     new Course("Agile Software development",1,82),
@@ -54,6 +56,15 @@
         methods: {
             toggleCourses: function () {
                 this.isActive = !this.isActive;
+            },
+            add_button: function (event) {
+                alert("töötab");
+                let uus_kursus = this.courses("a", 1, 8);
+                this.courses.push(uus_kursus);
+
+                if (event) {
+                    alert("ei")
+                }
             }
         }
     }
