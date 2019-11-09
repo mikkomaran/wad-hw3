@@ -32,7 +32,7 @@
         },
         data: () => {
             return {
-                gpa: 0
+                gpa: 2.75
             }
         },
         methods: {
@@ -43,8 +43,7 @@
             addGpa: function (gpa) {
                 this.gpa = gpa;
             }
-        },
-
+        }
     }
 
 </script>

@@ -28,14 +28,17 @@
         data: () => {
             return {
                 isActive: true,
-                user: new User("John", "Doe", "11/10/1994", "Data Science", 0)
+                user: new User("John", "Doe", "11/10/1994", "Data Science", 2.75)
             }
         },
         methods: {
             toggleProfile: function () {
                 this.isActive = !this.isActive;
-                this.user.gpa = this.gpa;
+                this.updateGPA();
             },
+            updateGPA: function () {
+                this.user.gpa = this.gpa;
+            }
         },
         props: {
             gpa: Number

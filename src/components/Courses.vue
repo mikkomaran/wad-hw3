@@ -22,13 +22,13 @@
         <br>
         <br>
         <div>
-            <button @click='toggle = !toggle' id="add-course-button" class="blue-button">+</button>
+            <button @click='toggleFields' id="add-course-button" class="blue-button">+</button>
             <span v-show='toggle'>
                 <input class="input" type="text" v-model="title" id="title" placeholder="Course title">
                 <input class="input" type="number" v-model="semester" min="1" max="8" placeholder="Semester" id="semester">
                 <input class="input" type="number" v-model="grade" min="0" max="100" placeholder="Grade" id="grade">
-                <button v-on:click="add_button" class="green-button" id="save-course">Save</button>
-                <button @click='toggle = !toggle' class="grey-button" id="cancel-course">Cancel</button>
+                <button @click="addButton" class="green-button" id="save-course">Save</button>
+                <button @click='cancelButton' class="grey-button" id="cancel-course">Cancel</button>
             </span>
         </div>
     </div>
@@ -60,26 +60,34 @@
             toggleCourses: function () {
                 this.isActive = !this.isActive;
             },
-            add_button: function () {
-                let title = this.title;
-                let semester = this.semester;
-                let grade = this.grade;
-
+            resetFields: function(){
                 this.title = "";
                 this.semester = "";
                 this.grade = "";
-
-                this.toggle = false;
-
+            },
+            toggleFields: function(){
+                this.toggle = !this.toggle;
+            },
+            addButton: function () {
+                let title = this.title;
+                let semester = this.semester;
+                let grade = this.grade;
                 this.courses.push(new Course(title, semester, grade));
                 this.computeGPA();
+
+                this.toggleFields();
+                this.resetFields();
+            },
+            cancelButton: function(){
+                this.toggleFields();
+                this.resetFields();
             },
             computeGPA: function () {
-                var grade = 0;
-                var points = 0;
+                let grade = 0;
+                let points = 0;
                 for (let i = 0; i < this.courses.length; i++) {
                     grade = this.courses[i].grade;
-                    var point = 0;
+                    let point = 0;
                     if (grade > 90) {
                         point = 4;
                     }
@@ -100,7 +108,7 @@
                     }
                     points += point;
                 }
-                var NewGpa = points/this.courses.length;
+                let NewGpa = points/this.courses.length;
                 NewGpa = Math.round(NewGpa * 100) / 100;
                 this.$props.add(NewGpa);
             }
