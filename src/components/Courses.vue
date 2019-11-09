@@ -37,7 +37,6 @@
 <script>
 
     import Course from "../models/Course";
-    import Profile from "./Profile";
 
     export default {
         el: '#add-course',
